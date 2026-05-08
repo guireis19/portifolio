@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GUILHERME REIS — SOFTWARE ENGINER </title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── DESIGN TOKENS ─────────────────────────────────────── */
+    :root {
+      --bg:       #0A0B0F;
+      --surface:  #12141A;
+      --surface2: #1C1F28;
+      --border:   rgba(255, 255, 255, 0.08);
+      --accent:   #00D4FF;
+      --accent2:  #7C6AF7;
+      --text:     #E8EAF0;
+      --muted:    #6B7080;
+      --green:    #22C55E;
+
+      --font-mono:    'DM Mono', monospace;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'Manrope', sans-serif;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+
+      --max-width: 960px;
+      --section-v: 80px;
+    }
+
+    /* ─── BASE ───────────────────────────────────────────────── */
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─────────────────────────────────────────────── */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    section {
+      padding: var(--section-v) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-of-type { border-bottom: none; }
+
+    /* ─── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 11, 15, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── SECTION LABEL ──────────────────────────────────────── */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .section-label::before { content: '//'; color: var(--muted); }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 36px;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════════════════════════ */
+    #hero {
+      padding-top: 100px;
+      padding-bottom: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Glows decorativos */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -100px;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: 15%;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(124,106,247,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.18);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+
+    .hero-heading {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6vw, 62px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .hero-heading .accent { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 17px;
+      color: #9BA3B8;
+      max-width: 540px;
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* ─── BOTÕES ─────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-primary:hover { opacity: 0.82; transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); }
+
+    /* ════════════════════════════════════════════════════════════
+       TECH STACK
+    ════════════════════════════════════════════════════════════ */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .stack-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+    .stack-card:hover { border-color: rgba(255,255,255,0.14); }
+
+    .stack-card-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: 7px; }
+
+    .tag {
+      display: inline-block;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3px 9px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: #BCC5D8;
+    }
+    .tag.cyan  { color: var(--accent);  border-color: rgba(0,212,255,0.22);  background: rgba(0,212,255,0.06); }
+    .tag.violet{ color: #A89AFA;        border-color: rgba(124,106,247,0.25); background: rgba(124,106,247,0.08); }
+    .tag.green { color: #4ADE80;        border-color: rgba(74,222,128,0.2);  background: rgba(74,222,128,0.06); }
+    .tag.amber { color: #FBBF24;        border-color: rgba(251,191,36,0.2);  background: rgba(251,191,36,0.05); }
+
+    /* ════════════════════════════════════════════════════════════
+       PROJETOS
+    ════════════════════════════════════════════════════════════ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .project-card:hover { border-color: rgba(0,212,255,0.22); transform: translateY(-3px); }
+    .project-card:hover::before { opacity: 1; }
+
+    .project-meta {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .project-name {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .project-year {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      padding-top: 3px;
+    }
+
+    .project-problem {
+      font-size: 13.5px;
+      color: #8B93A8;
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .project-actions { display: flex; gap: 10px; margin-top: 4px; }
+
+    .btn-demo {
+      flex: 1;
+      padding: 9px 0;
+      background: rgba(0,212,255,0.09);
+      color: var(--accent);
+      border: 1px solid rgba(0,212,255,0.22);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-demo:hover { background: rgba(0,212,255,0.17); }
+
+    .btn-code {
+      flex: 1;
+      padding: 9px 0;
+      background: var(--surface2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: color 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-code:hover { color: var(--text); }
+
+    /* ════════════════════════════════════════════════════════════
+       DIFERENCIAL TÉCNICO
+    ════════════════════════════════════════════════════════════ */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .diff-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      transition: border-color 0.2s;
+    }
+    .diff-card:hover { border-color: rgba(124,106,247,0.3); }
+
+    .diff-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-sm);
+      background: rgba(124,106,247,0.1);
+      border: 1px solid rgba(124,106,247,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+
+    .diff-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .diff-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       CONTATO
+    ════════════════════════════════════════════════════════════ */
+    .contact-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 420px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .contact-link:hover {
+      border-color: rgba(0,212,255,0.28);
+      background: rgba(0,212,255,0.03);
+    }
+
+    .contact-inner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .contact-icon-box {
+      width: 38px; height: 38px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .icon-gh { background: rgba(255,255,255,0.06); }
+    .icon-li { background: rgba(0,119,181,0.14); }
+    .icon-em { background: rgba(0,212,255,0.1); }
+
+    .contact-platform {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 2px;
+      letter-spacing: 0.06em;
+    }
+    .contact-handle { font-size: 14px; font-weight: 500; color: var(--text); }
+
+    .contact-arrow { color: var(--muted); font-size: 18px; }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 32px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── SCROLL ANIMATIONS ──────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVO ─────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .container { padding: 0 20px; }
+      .nav-links { display: none; }
+      :root { --section-v: 56px; }
+      .hero-cta { flex-direction: column; align-items: flex-start; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ───────────────────────────────────────────────── -->
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-logo">// GUILHERME REIS </span>
+      <ul class="nav-links">
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#diferencial">Diferencial</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Disponível para novos projetos
+      </div>
+
+      <h1 class="hero-heading">
+        GUILHERME REIS<br>
+        <span class="accent"> DESENVOLVIMENTO WEB - IA - DADOS </span>
+      </h1>
+
+      <p class="hero-sub">
+        Construo sistemas que escalam — de MVPs a arquiteturas distribuídas.
+        Escrevo código com intenção, testo com rigor e entrego com responsabilidade.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#contato" class="btn btn-primary">✦ Entre em contato</a>
+        <a href="#projetos" class="btn btn-ghost">Ver projetos ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TECH STACK ─────────────────────────────────────────── -->
+  <section id="stack">
+    <div class="container">
+      <p class="section-label">Tech Stack</p>
+      <h2 class="section-title">Ferramentas do ofício</h2>
+
+      <div class="stack-grid">
+
+        <div class="stack-card fade-up">
+          <p class="stack-card-label">Front-end</p>
+          <div class="tag-list">
+            <span class="tag cyan">HTML</span>
+            <span class="tag cyan">CSS</span>
+            <span class="tag cyan">JavaScript</span>
+            <span class="tag cyan">Tailwind CSS</span>
+            
+          </div>
+        </div>
+
+        <div class="stack-card fade-up" style="transition-delay:0.08s">
+          <p class="stack-card-label">Back-end</p>
+          <div class="tag-list">
+            <span class="tag violet">python(FLASK)</span>
+            <span class="tag violet">C</span>
+            <span class="tag violet">JAVA</span>
+          </div>
+        </div>
+
+        <div class="stack-card fade-up" style="transition-delay:0.16s">
+          <p class="stack-card-label">Banco de Dados</p>
+          <div class="tag-list">
+            <span class="tag green">ORACLE SQL</span>
+            <span class="tag green">PL\SQL</span>
+            <span class="tag green">MODELAGEM RELACIONAL</span>
+          </div>
+        </div>
+
+        <div class="stack-card fade-up" style="transition-delay:0.24s">
+          <p class="stack-card-label">DevOps &amp; Cloud</p>
+          <div class="tag-list">
+            <span class="tag amber">Docker</span>
+            <span class="tag amber">GitHub Actions</span>
+            <span class="tag amber">AWS</span>
+            <span class="tag amber">Git</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJETOS ───────────────────────────────────────────── -->
+  <section id="projetos">
+    <div class="container">
+      <p class="section-label">Projetos em Destaque</p>
+      <h2 class="section-title">O que foi construído</h2>
+
+      <div class="projects-grid">
+
+        <!-- Card 1 -->
+        <div class="project-card fade-up">
+          <div class="project-meta">
+            <span class="project-name"> rastreador de ativos</span>
+            <span class="project-year"> 2026 </span>
+          </div>
+          <p class="project-problem">
+            Desenvolvi uma solução completa de monitoramento e distribuição de dados. O sistema utiliza um rastreador em Python para coletar informações de ativos em tempo real, processa esses dados via back-end e os disponibiliza através de uma API REST construída com Flask. Todos os registros são armazenados e gerenciados em um banco de dados Oracle SQL.
+          </p>
+          <div class="project-tags">
+            <span class="tag cyan">python(flask)</span>
+            <span class="tag cyan"> API</span>
+            <span class="tag cyan"> banco de dados - SQL</span>
+          </div>
+          <div class="project-actions">
+            <a href="https://rastreador-ativos-reistech.onrender.com/" target="_blank" rel="noopener" class="btn-demo">↗ Ver Demo</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="project-card fade-up" style="transition-delay:0.1s">
+          <div class="project-meta">
+            <span class="project-name"> landing page </span>
+            <span class="project-year"> 2026 </span>
+          </div>
+          <p class="project-problem">Projeto real desenvolvido para presença digital e captação de clientes. Implementei uma interface moderna e responsiva utilizando HTML5 e Tailwind CSS, focada em performance e experiência do usuário (UX). O projeto inclui integração direta com canais de atendimento para conversão imediata.
+          </p>
+          <div class="project-tags">
+            <span class="tag violet"> html </span>
+            <span class="tag violet"> Tailwind CSS </span>
+          </div>
+          <div class="project-actions">
+            <a href="https://guireis19.github.io/landingpage--amanda/" target="_blank" rel="noopener" class="btn-demo">↗ Ver Demo</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="project-card fade-up" style="transition-delay:0.2s">
+          <div class="project-meta">
+            <span class="project-name"> site  starbucks</span>
+            <span class="project-year"> 2025 </span>
+          </div>
+          <p class="project-problem">Esta é uma reprodução fiel da interface da Starbucks, desenvolvida para exercitar habilidades avançadas de estilização e layout. O objetivo principal foi replicar a identidade visual icônica da marca, garantindo que o design fosse limpo, moderno e convidativo.
+          </p>
+          <div class="project-tags">
+            <span class="tag green"> html </span>
+            <span class="tag green"> CSS </span>
+            <span class="tag green"> JavaScript </span>
+          </div>
+          <div class="project-actions">
+            <a href="https://guireis19.github.io/site--starbucks/" target="_blank" rel="noopener" class="btn-demo">↗ Ver Demo</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIFERENCIAL ────────────────────────────────────────── -->
+  <section id="diferencial">
+    <div class="container">
+      <p class="section-label">Diferencial Técnico</p>
+      <h2 class="section-title">Como eu trabalho</h2>
+
+      <div class="diff-grid">
+
+        <div class="diff-card fade-up">
+          <div class="diff-icon">⬡</div>
+          <p class="diff-title">Arquitetura Limpa</p>
+          <p class="diff-desc">Código organizado para durar. Separação de responsabilidades, baixo acoplamento e alta coesão desde o início do projeto.</p>
+        </div>
+
+        <div class="diff-card fade-up" style="transition-delay:0.08s">
+          <div class="diff-icon">◈</div>
+          <p class="diff-title">Orientado a Testes</p>
+          <p class="diff-desc">Testes não são extras — são parte do design. Escrevo código que pode ser testado e entregue com confiança.</p>
+        </div>
+
+        <div class="diff-card fade-up" style="transition-delay:0.16s">
+          <div class="diff-icon">⊕</div>
+          <p class="diff-title">Escalabilidade Real</p>
+          <p class="diff-desc">Decisões de arquitetura que acompanham o crescimento do produto sem reescritas dolorosas no futuro.</p>
+        </div>
+
+        <div class="diff-card fade-up" style="transition-delay:0.24s">
+          <div class="diff-icon">◎</div>
+          <p class="diff-title">modelagem estruturada</p>
+          <p class="diff-desc">Penso no banco de dados e na estrutura de classes antes do código. Utilizo diagramas UML e lógica de predicados para garantir que o sistema seja consistente e livre de redundâncias.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTATO ────────────────────────────────────────────── -->
+  <section id="contato">
+    <div class="container">
+      <p class="section-label">Contato</p>
+      <h2 class="section-title">Vamos conversar</h2>
+
+      <div class="contact-wrapper">
+
+        <a href="https://github.com/guireis19" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-inner">
+            <div class="contact-icon-box icon-gh">
+              <!-- GitHub SVG icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:#E8EAF0">
+                <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.57.1.78-.25.78-.55v-1.93c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.72.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.9 10.9 0 012.87-.39c.97.01 1.95.13 2.87.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.13v3.16c0 .31.21.66.79.55C20.21 21.37 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="contact-platform">GitHub</span>
+              <span class="contact-handle">github.com/guireis19</span>
+            </div>
+          </div>
+          <span class="contact-arrow">→</span>
+        </a>
+
+        <a href="https://linkedin.com/in/guilherme-reisdev" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-inner">
+            <div class="contact-icon-box icon-li">
+              <!-- LinkedIn SVG icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:#60A5FA">
+                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM3.56 20.45h3.56V9H3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46C23.21 24 24 23.23 24 22.28V1.72C24 .77 23.21 0 22.23 0z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="contact-platform"> LinkedIn </span>
+              <span class="contact-handle"> www.linkedin.com/in/guilherme-reisdev </span>
+            </div>
+          </div>
+          <span class="contact-arrow">→</span>
+        </a>
+
+        <a href="mailto:guilherme.reis.muther@gmail.com" class="contact-link">
+          <div class="contact-inner">
+            <div class="contact-icon-box icon-em">
+              <!-- Mail SVG icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#00D4FF">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="M2 7l10 7 10-7"/>
+              </svg>
+            </div>
+            <div>
+              <span class="contact-platform">E-mail</span>
+              <span class="contact-handle"> guilherme.reis.muther@gmail.com </span>
+            </div>
+          </div>
+          <span class="contact-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer>
+    <p>Feito com atenção aos detalhes por guilherme reis · 2026 </p>
+  </footer>
+
+  <!-- ── SCROLL ANIMATION SCRIPT ───────────────────────────── -->
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+  </script>
+
+</body>
+</html>
